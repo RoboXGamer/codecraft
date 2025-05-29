@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,12 +62,26 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
-				}
+				},
+				// CodeCraft custom colors
+				'craft-bg': '#0F111A',
+				'craft-panel': '#1A1C26',
+				'craft-border': '#2A2D3A',
+				'craft-accent': '#00FFC6',
+				'craft-accent-secondary': '#FFAC33',
+				'craft-text-primary': '#FFFFFF',
+				'craft-text-secondary': '#A1A1AA',
+				'craft-success': '#4ADE80',
+				'craft-error': '#EF4444',
 			},
 			borderRadius: {
 				lg: 'var(--radius)',
 				md: 'calc(var(--radius) - 2px)',
 				sm: 'calc(var(--radius) - 4px)'
+			},
+			fontFamily: {
+				'code': ['Fira Code', 'JetBrains Mono', 'monospace'],
+				'sans': ['Inter', 'system-ui', 'sans-serif'],
 			},
 			keyframes: {
 				'accordion-down': {
@@ -84,11 +99,31 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'glow-pulse': {
+					'0%, 100%': {
+						boxShadow: '0 0 5px rgba(0, 255, 198, 0.5)'
+					},
+					'50%': {
+						boxShadow: '0 0 20px rgba(0, 255, 198, 0.8), 0 0 30px rgba(0, 255, 198, 0.6)'
+					}
+				},
+				'xp-fill': {
+					'0%': { width: '0%' },
+					'100%': { width: 'var(--progress-width)' }
+				},
+				'level-up': {
+					'0%': { transform: 'scale(1)', filter: 'brightness(1)' },
+					'50%': { transform: 'scale(1.1)', filter: 'brightness(1.5)' },
+					'100%': { transform: 'scale(1)', filter: 'brightness(1)' }
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'glow-pulse': 'glow-pulse 2s ease-in-out infinite',
+				'xp-fill': 'xp-fill 1s ease-out',
+				'level-up': 'level-up 0.6s ease-in-out',
 			}
 		}
 	},
