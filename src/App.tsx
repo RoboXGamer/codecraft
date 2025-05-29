@@ -10,6 +10,7 @@ import SheetsPage from "./pages/SheetsPage";
 import ContestsPage from "./pages/ContestsPage";
 import InterviewPage from "./pages/InterviewPage";
 import ProblemSolvePage from "./pages/ProblemSolvePage";
+import CreateProblemPage from "./pages/CreateProblemPage";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/problems" element={<ProblemsPage />} />
+          <Route path="/problems/create" element={<CreateProblemPage />} />
           <Route path="/sheets" element={<SheetsPage />} />
           <Route path="/contests" element={<ContestsPage />} />
           <Route path="/interview" element={<InterviewPage />} />

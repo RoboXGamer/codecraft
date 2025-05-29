@@ -1,10 +1,10 @@
-
 import Header from "@/components/Header";
 import ProblemCard from "@/components/ProblemCard";
 import FilterBar from "@/components/FilterBar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Plus } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const ProblemsPage = () => {
   const problems = [
@@ -54,10 +54,12 @@ const ProblemsPage = () => {
             <h1 className="text-3xl font-bold text-craft-text-primary mb-2">Problems</h1>
             <p className="text-craft-text-secondary">Sharpen your coding skills with our curated problems</p>
           </div>
-          <Button className="bg-craft-accent hover:bg-craft-accent/80 text-craft-bg">
-            <Plus className="w-4 h-4 mr-2" />
-            Create Problem
-          </Button>
+          <Link to="/problems/create">
+            <Button className="bg-craft-accent hover:bg-craft-accent/80 text-craft-bg">
+              <Plus className="w-4 h-4 mr-2" />
+              Create Problem
+            </Button>
+          </Link>
         </div>
 
         {/* Search Bar */}
