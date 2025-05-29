@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -35,20 +36,22 @@
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
+
+    /* CodeCraft Neon Theme Variables */
+    --craft-bg: #0a0a0f;
+    --craft-panel: #1a1a2e;
+    --craft-border: #2a2a3e;
+    --craft-accent: #6366f1;
+    --craft-accent-secondary: #8b5cf6;
+    --craft-text-primary: #ffffff;
+    --craft-text-secondary: #94a3b8;
   }
 
   .dark {
@@ -97,5 +100,51 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .bg-craft-bg {
+    background-color: var(--craft-bg);
+  }
+  
+  .bg-craft-panel {
+    background-color: var(--craft-panel);
+  }
+  
+  .border-craft-border {
+    border-color: var(--craft-border);
+  }
+  
+  .text-craft-text-primary {
+    color: var(--craft-text-primary);
+  }
+  
+  .text-craft-text-secondary {
+    color: var(--craft-text-secondary);
+  }
+  
+  .text-craft-accent {
+    color: var(--craft-accent);
+  }
+  
+  .bg-craft-accent {
+    background-color: var(--craft-accent);
+  }
+  
+  .text-craft-bg {
+    color: var(--craft-bg);
+  }
+  
+  .border-craft-accent {
+    border-color: var(--craft-accent);
+  }
+  
+  .hover\:border-craft-accent:hover {
+    border-color: var(--craft-accent);
+  }
+  
+  .bg-craft-accent-secondary {
+    background-color: var(--craft-accent-secondary);
   }
 }
