@@ -1,58 +1,89 @@
 
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { ChevronDown } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { User, Menu, Zap, Trophy, Target, Code } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
+  const location = useLocation();
+  
+  const navItems = [
+    { name: "Problems", path: "/problems", icon: Code },
+    { name: "Sheets", path: "/sheets", icon: Target },
+    { name: "Contests", path: "/contests", icon: Trophy },
+    { name: "Interview", path: "/interview", icon: User },
+  ];
+
+  const isActive = (path: string) => location.pathname === path;
+
   return (
-    <header className="bg-craft-panel border-b border-craft-border px-6 py-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-6">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-craft-accent to-craft-accent-secondary rounded-lg flex items-center justify-center">
-              <span className="text-craft-bg font-bold text-sm">CC</span>
+    <header className="bg-craft-panel border-b border-craft-border sticky top-0 z-50 backdrop-blur-sm bg-craft-panel/95">
+      <div className="container mx-auto px-6 py-4">
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2 group">
+            <div className="w-8 h-8 bg-gradient-to-br from-craft-accent to-craft-accent-secondary rounded-lg flex items-center justify-center group-hover:animate-glow-pulse">
+              <Zap className="w-5 h-5 text-craft-bg" />
             </div>
-            <h1 className="text-xl font-bold text-craft-text-primary">CodeCraft</h1>
-          </div>
-          
-          <nav className="hidden md:flex space-x-6">
-            <Button variant="ghost" className="text-craft-text-secondary hover:text-craft-accent hover:bg-craft-accent/10 transition-all duration-200">
-              Problems
-            </Button>
-            <Button variant="ghost" className="text-craft-text-secondary hover:text-craft-accent hover:bg-craft-accent/10 transition-all duration-200">
-              Contest
-            </Button>
-            <Button variant="ghost" className="text-craft-text-secondary hover:text-craft-accent hover:bg-craft-accent/10 transition-all duration-200">
-              Interview
-            </Button>
-            <Button variant="ghost" className="text-craft-text-secondary hover:text-craft-accent hover:bg-craft-accent/10 transition-all duration-200">
-              Sheets
-            </Button>
+            <span className="text-craft-text-primary font-bold text-xl">CodeCraft</span>
+          </Link>
+
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center space-x-1">
+            {navItems.map((item) => (
+              <Link key={item.name} to={item.path}>
+                <Button
+                  variant="ghost"
+                  className={`text-craft-text-secondary hover:text-craft-accent hover:bg-craft-accent/10 transition-all duration-200 ${
+                    isActive(item.path) ? 'text-craft-accent bg-craft-accent/10' : ''
+                  }`}
+                >
+                  <item.icon className="w-4 h-4 mr-2" />
+                  {item.name}
+                </Button>
+              </Link>
+            ))}
           </nav>
-        </div>
 
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2 bg-craft-bg rounded-lg px-3 py-2">
-            <div className="flex items-center space-x-2">
-              <div className="w-2 h-2 bg-craft-accent rounded-full animate-glow-pulse"></div>
-              <span className="text-craft-text-secondary text-sm">Streak:</span>
-              <span className="text-craft-accent font-semibold">7</span>
+          {/* User Section */}
+          <div className="flex items-center space-x-4">
+            <div className="hidden sm:flex items-center space-x-2">
+              <Badge className="bg-craft-accent/20 text-craft-accent border-craft-accent/30">
+                Level 12
+              </Badge>
+              <span className="text-craft-text-secondary text-sm">247 XP</span>
             </div>
-            <div className="w-px h-4 bg-craft-border"></div>
-            <div className="flex items-center space-x-2">
-              <span className="text-craft-text-secondary text-sm">XP:</span>
-              <span className="text-craft-accent-secondary font-semibold">1,247</span>
+            
+            <div className="w-8 h-8 bg-gradient-to-br from-craft-accent to-craft-accent-secondary rounded-full flex items-center justify-center cursor-pointer hover:shadow-lg hover:shadow-craft-accent/25 transition-all duration-200">
+              <User className="w-4 h-4 text-craft-bg" />
             </div>
-          </div>
 
-          <div className="flex items-center space-x-2 cursor-pointer hover:bg-craft-bg rounded-lg px-2 py-1 transition-colors">
-            <Avatar className="w-8 h-8">
-              <AvatarFallback className="bg-gradient-to-br from-craft-accent to-craft-accent-secondary text-craft-bg font-semibold text-sm">
-                U
-              </AvatarFallback>
-            </Avatar>
-            <ChevronDown className="w-4 h-4 text-craft-text-secondary" />
+            {/* Mobile Menu */}
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="md:hidden text-craft-text-secondary hover:text-craft-accent">
+                  <Menu className="w-5 h-5" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent className="bg-craft-panel border-craft-border">
+                <div className="flex flex-col space-y-4 mt-8">
+                  {navItems.map((item) => (
+                    <Link key={item.name} to={item.path}>
+                      <Button
+                        variant="ghost"
+                        className={`w-full justify-start text-craft-text-secondary hover:text-craft-accent hover:bg-craft-accent/10 ${
+                          isActive(item.path) ? 'text-craft-accent bg-craft-accent/10' : ''
+                        }`}
+                      >
+                        <item.icon className="w-4 h-4 mr-2" />
+                        {item.name}
+                      </Button>
+                    </Link>
+                  ))}
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>

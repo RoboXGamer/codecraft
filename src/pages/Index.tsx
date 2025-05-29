@@ -7,6 +7,7 @@ import FilterBar from "@/components/FilterBar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Zap, Target, Trophy, TrendingUp, Code, Users } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const problems = [
@@ -43,6 +44,10 @@ const Index = () => {
       acceptanceRate: 35.4
     }
   ];
+
+  const getRandomProblemId = () => {
+    return Math.floor(Math.random() * 1000) + 1;
+  };
 
   return (
     <div className="min-h-screen bg-craft-bg">
@@ -112,18 +117,24 @@ const Index = () => {
 
         {/* Quick Actions */}
         <div className="flex flex-wrap gap-4 mb-8">
-          <Button className="bg-craft-accent hover:bg-craft-accent/80 text-craft-bg font-semibold transition-all duration-200 hover:shadow-lg hover:shadow-craft-accent/25">
-            <Zap className="w-4 h-4 mr-2" />
-            Random Problem
-          </Button>
-          <Button variant="outline" className="border-craft-accent text-craft-accent hover:bg-craft-accent/10 transition-all duration-200">
-            <Target className="w-4 h-4 mr-2" />
-            Daily Challenge
-          </Button>
-          <Button variant="outline" className="border-craft-border text-craft-text-secondary hover:border-craft-accent hover:text-craft-accent transition-all duration-200">
-            <Users className="w-4 h-4 mr-2" />
-            Join Contest
-          </Button>
+          <Link to={`/problem/${getRandomProblemId()}`}>
+            <Button className="bg-craft-accent hover:bg-craft-accent/80 text-craft-bg font-semibold transition-all duration-200 hover:shadow-lg hover:shadow-craft-accent/25">
+              <Zap className="w-4 h-4 mr-2" />
+              Random Problem
+            </Button>
+          </Link>
+          <Link to="/problem/1">
+            <Button variant="outline" className="border-craft-accent text-craft-accent hover:bg-craft-accent/10 transition-all duration-200">
+              <Target className="w-4 h-4 mr-2" />
+              Daily Challenge
+            </Button>
+          </Link>
+          <Link to="/contests">
+            <Button variant="outline" className="border-craft-border text-craft-text-secondary hover:border-craft-accent hover:text-craft-accent transition-all duration-200">
+              <Users className="w-4 h-4 mr-2" />
+              Join Contest
+            </Button>
+          </Link>
         </div>
 
         {/* Filter Bar */}
@@ -147,12 +158,14 @@ const Index = () => {
 
         {/* Load More */}
         <div className="text-center mt-8">
-          <Button 
-            variant="outline" 
-            className="border-craft-border text-craft-text-secondary hover:border-craft-accent hover:text-craft-accent transition-all duration-200"
-          >
-            Load More Problems
-          </Button>
+          <Link to="/problems">
+            <Button 
+              variant="outline" 
+              className="border-craft-border text-craft-text-secondary hover:border-craft-accent hover:text-craft-accent transition-all duration-200"
+            >
+              Load More Problems
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
