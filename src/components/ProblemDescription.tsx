@@ -51,23 +51,23 @@ const ProblemDescription = ({ problem }: ProblemDescriptionProps) => {
       </div>
 
       <Tabs defaultValue="description" className="w-full">
-        <TabsList className="bg-craft-bg border border-craft-border gap-2 max-sm:gap-0 w-full grid grid-cols-3">
+        <TabsList className="bg-craft-bg border border-craft-border gap-2 max-sm:gap-0 w-full grid grid-cols-3 px-1">
           <TabsTrigger
             value="description"
-            className="data-[state=active]:bg-craft-panel data-[state=active]:text-craft-text-primary"
+            className="data-[state=active]:bg-craft-border data-[state=active]:text-craft-text-primary"
           >
             Description
           </TabsTrigger>
           <TabsTrigger
             value="hints"
-            className="data-[state=active]:bg-craft-panel data-[state=active]:text-craft-text-primary"
+            className="data-[state=active]:bg-craft-border data-[state=active]:text-craft-text-primary"
           >
             <Lightbulb className="w-4 h-4 mr-1" />
             Hints
           </TabsTrigger>
           <TabsTrigger
             value="discussion"
-            className="data-[state=active]:bg-craft-panel data-[state=active]:text-craft-text-primary"
+            className="data-[state=active]:bg-craft-border data-[state=active]:text-craft-text-primary"
           >
             Discussion
           </TabsTrigger>
