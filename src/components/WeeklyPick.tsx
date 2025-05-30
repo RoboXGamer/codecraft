@@ -12,7 +12,7 @@ const WeeklyPick = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
-      <div className="glass-card p-8 rounded-2xl relative overflow-hidden">
+      <div className="glass-card p-8 rounded-2xl relative overflow-hidden text-white">
         {/* Background Glow */}
         <div className="absolute inset-0 bg-gradient-to-br from-neon-green/10 via-transparent to-neon-blue/10 pointer-events-none"></div>
 

@@ -11,34 +11,34 @@ const ProblemsPage = () => {
     {
       id: 1,
       title: "Two Sum",
-      difficulty: 'Easy' as const,
-      topics: ['Array', 'Hash Table'],
+      difficulty: "Easy" as const,
+      topics: ["Array", "Hash Table"],
       solved: true,
-      acceptanceRate: 49.2
+      acceptanceRate: 49.2,
     },
     {
       id: 2,
       title: "Add Two Numbers",
-      difficulty: 'Medium' as const,
-      topics: ['Linked List', 'Math', 'Recursion'],
+      difficulty: "Medium" as const,
+      topics: ["Linked List", "Math", "Recursion"],
       solved: false,
-      acceptanceRate: 37.8
+      acceptanceRate: 37.8,
     },
     {
       id: 3,
       title: "Longest Substring Without Repeating Characters",
-      difficulty: 'Medium' as const,
-      topics: ['Hash Table', 'String', 'Sliding Window'],
+      difficulty: "Medium" as const,
+      topics: ["Hash Table", "String", "Sliding Window"],
       solved: true,
-      acceptanceRate: 33.1
+      acceptanceRate: 33.1,
     },
     {
       id: 4,
       title: "Median of Two Sorted Arrays",
-      difficulty: 'Hard' as const,
-      topics: ['Array', 'Binary Search', 'Divide and Conquer'],
+      difficulty: "Hard" as const,
+      topics: ["Array", "Binary Search", "Divide and Conquer"],
       solved: false,
-      acceptanceRate: 35.4
+      acceptanceRate: 35.4,
     },
     // Add more problems here
   ];
@@ -46,13 +46,17 @@ const ProblemsPage = () => {
   return (
     <div className="min-h-screen bg-craft-bg">
       <Header />
-      
+
       <div className="container mx-auto px-6 py-8">
         {/* Page Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-craft-text-primary mb-2">Problems</h1>
-            <p className="text-craft-text-secondary">Sharpen your coding skills with our curated problems</p>
+            <h1 className="text-3xl font-bold text-craft-text-primary mb-2">
+              Problems
+            </h1>
+            <p className="text-craft-text-secondary">
+              Sharpen your coding skills with our curated problems
+            </p>
           </div>
           <Link to="/problems/create">
             <Button className="bg-craft-accent hover:bg-craft-accent/80 text-craft-bg">
@@ -62,29 +66,20 @@ const ProblemsPage = () => {
           </Link>
         </div>
 
-        {/* Search Bar */}
-        <div className="mb-6">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-craft-text-secondary w-5 h-5" />
-            <Input
-              placeholder="Search problems..."
-              className="pl-10 bg-craft-panel border-craft-border text-craft-text-primary placeholder:text-craft-text-secondary focus:border-craft-accent"
-            />
-          </div>
-        </div>
-
         {/* Filter Bar */}
         <FilterBar />
 
         {/* Problems List */}
         <div className="mt-8">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xl font-semibold text-craft-text-primary">All Problems</h2>
+            <h2 className="text-xl font-semibold text-craft-text-primary">
+              All Problems
+            </h2>
             <div className="flex items-center space-x-2 text-sm text-craft-text-secondary">
               <span>Showing 1-20 of 2,847 problems</span>
             </div>
           </div>
-          
+
           <div className="grid gap-4">
             {problems.map((problem) => (
               <ProblemCard key={problem.id} {...problem} />
@@ -94,8 +89,8 @@ const ProblemsPage = () => {
 
         {/* Load More */}
         <div className="text-center mt-8">
-          <Button 
-            variant="outline" 
+          <Button
+            variant="outline"
             className="border-craft-border text-craft-text-secondary hover:border-craft-accent hover:text-craft-accent transition-all duration-200"
           >
             Load More Problems
