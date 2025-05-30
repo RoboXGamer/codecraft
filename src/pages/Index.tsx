@@ -1,174 +1,221 @@
-
-import Header from "@/components/Header";
-import ProblemCard from "@/components/ProblemCard";
-import XPProgressBar from "@/components/XPProgressBar";
-import StatsCard from "@/components/StatsCard";
-import FilterBar from "@/components/FilterBar";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Zap, Target, Trophy, TrendingUp, Code, Users } from "lucide-react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { motion } from "motion/react";
+import HeroBanner from "../components/HeroBanner";
+import SearchAndFilters from "../components/SearchAndFilters";
+import FeaturedChallenge from "../components/FeaturedChallenge";
+import XPMissions from "../components/XPMissions";
+import TopicGrid from "../components/TopicGrid";
+import TagExplorer from "../components/TagExplorer";
+import TrendingCarousel from "../components/TrendingCarousel";
+import CompanyZone from "../components/CompanyZone";
+import WeeklyPick from "../components/WeeklyPick";
+import LiveFeed from "../components/LiveFeed";
+import Leaderboard from "../components/Leaderboard";
+import CodePreviewPanel from "../components/CodePreviewPanel";
+import FloatingChallengeCard from "../components/FloatingChallengeCard";
+import AnimatedTabs from "../components/AnimatedTabs";
+import CodeRainBackground from "../components/CodeRainBackground";
 
 const Index = () => {
-  const problems = [
+  const [isCodePanelOpen, setIsCodePanelOpen] = useState(false);
+
+  // Sample challenges data
+  const sampleChallenges = [
     {
-      id: 1,
+      id: "1",
       title: "Two Sum",
-      difficulty: 'Easy' as const,
-      topics: ['Array', 'Hash Table'],
-      solved: true,
-      acceptanceRate: 49.2
+      difficulty: "easy" as const,
+      xp: 50,
+      timeEstimate: "15 min",
+      solvedBy: 15420,
+      tags: ["array", "hash-table"],
     },
     {
-      id: 2,
-      title: "Add Two Numbers",
-      difficulty: 'Medium' as const,
-      topics: ['Linked List', 'Math', 'Recursion'],
-      solved: false,
-      acceptanceRate: 37.8
+      id: "2",
+      title: "Merge Intervals",
+      difficulty: "medium" as const,
+      xp: 120,
+      timeEstimate: "30 min",
+      solvedBy: 8340,
+      tags: ["array", "sorting"],
     },
     {
-      id: 3,
-      title: "Longest Substring Without Repeating Characters",
-      difficulty: 'Medium' as const,
-      topics: ['Hash Table', 'String', 'Sliding Window'],
-      solved: true,
-      acceptanceRate: 33.1
+      id: "3",
+      title: "Word Ladder",
+      difficulty: "hard" as const,
+      xp: 200,
+      timeEstimate: "45 min",
+      solvedBy: 3210,
+      tags: ["bfs", "string"],
     },
-    {
-      id: 4,
-      title: "Median of Two Sorted Arrays",
-      difficulty: 'Hard' as const,
-      topics: ['Array', 'Binary Search', 'Divide and Conquer'],
-      solved: false,
-      acceptanceRate: 35.4
-    }
   ];
 
-  const getRandomProblemId = () => {
-    return Math.floor(Math.random() * 1000) + 1;
-  };
+  const tabsData = [
+    {
+      id: "trending",
+      label: "🔥 Trending",
+      content: (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {sampleChallenges.map((challenge) => (
+            <FloatingChallengeCard
+              key={challenge.id}
+              challenge={challenge}
+              onPreview={() => setIsCodePanelOpen(true)}
+            />
+          ))}
+        </div>
+      ),
+    },
+    {
+      id: "daily",
+      label: "📅 Daily",
+      content: <XPMissions />,
+    },
+    {
+      id: "sheets",
+      label: "📋 Problem Sheets",
+      content: <CompanyZone />,
+    },
+  ];
 
   return (
-    <div className="min-h-screen bg-craft-bg">
-      <Header />
-      
-      <div className="container mx-auto px-6 py-8">
-        {/* Hero Section */}
-        <div className="mb-8">
-          <div className="flex items-center space-x-2 mb-4">
-            <Zap className="w-6 h-6 text-craft-accent animate-glow-pulse" />
-            <h1 className="text-3xl font-bold text-craft-text-primary">Welcome back, Coder!</h1>
-          </div>
-          <p className="text-craft-text-secondary text-lg">Continue your coding journey and level up your skills.</p>
-        </div>
+    <>
+      <CodeRainBackground />
 
-        {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <StatsCard
-            title="Problems Solved"
-            value="156"
-            subtitle="12 this week"
-            badge="+3"
-            icon={<Target className="w-5 h-5" />}
-            glowColor="craft-success"
-          />
-          <StatsCard
-            title="Current Streak"
-            value="7"
-            subtitle="days in a row"
-            badge="🔥"
-            icon={<TrendingUp className="w-5 h-5" />}
-            glowColor="craft-accent-secondary"
-          />
-          <StatsCard
-            title="Contest Rating"
-            value="1,847"
-            subtitle="Guardian rank"
-            badge="⭐"
-            icon={<Trophy className="w-5 h-5" />}
-            glowColor="craft-accent"
-          />
-          <StatsCard
-            title="Code Reviews"
-            value="23"
-            subtitle="This month"
-            badge="New"
-            icon={<Code className="w-5 h-5" />}
-            glowColor="craft-accent"
-          />
-        </div>
+      <motion.div
+        className="min-h-screen bg-[#0D0D0D] relative z-10 hero"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        {/* Hero Section with enhanced animations */}
+        <motion.section
+          initial={{ y: 40, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <HeroBanner />
+        </motion.section>
 
-        {/* XP Progress */}
-        <div className="bg-craft-panel border border-craft-border rounded-lg p-6 mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h3 className="text-craft-text-primary font-semibold text-lg">Level Progress</h3>
-              <p className="text-craft-text-secondary">Keep coding to reach the next level!</p>
-            </div>
-            <div className="flex items-center space-x-2">
-              <div className="w-12 h-12 bg-gradient-to-br from-craft-accent to-craft-accent-secondary rounded-full flex items-center justify-center">
-                <span className="text-craft-bg font-bold">12</span>
-              </div>
-            </div>
-          </div>
-          <XPProgressBar currentXP={247} levelXP={500} level={12} animate={true} />
-        </div>
+        {/* Main Content */}
+        <div className="container mx-auto px-4 space-y-12 pb-16">
+          {/* Search & Filters */}
+          <motion.section
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <SearchAndFilters />
+          </motion.section>
 
-        {/* Quick Actions */}
-        <div className="flex flex-wrap gap-4 mb-8">
-          <Link to={`/problem/${getRandomProblemId()}`}>
-            <Button className="bg-craft-accent hover:bg-craft-accent/80 text-craft-bg font-semibold transition-all duration-200 hover:shadow-lg hover:shadow-craft-accent/25">
-              <Zap className="w-4 h-4 mr-2" />
-              Random Problem
-            </Button>
-          </Link>
-          <Link to="/problem/1">
-            <Button variant="outline" className="border-craft-accent text-craft-accent hover:bg-craft-accent/10 transition-all duration-200">
-              <Target className="w-4 h-4 mr-2" />
-              Daily Challenge
-            </Button>
-          </Link>
-          <Link to="/contests">
-            <Button variant="outline" className="border-craft-border text-craft-text-secondary hover:border-craft-accent hover:text-craft-accent transition-all duration-200">
-              <Users className="w-4 h-4 mr-2" />
-              Join Contest
-            </Button>
-          </Link>
-        </div>
+          {/* Featured Challenge */}
+          <motion.section
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            <FeaturedChallenge />
+          </motion.section>
 
-        {/* Filter Bar */}
-        <FilterBar />
+          {/* Animated Tabs Section */}
+          <motion.section
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            <h2 className="text-3xl font-orbitron font-bold mb-8 text-center">
+              <span className="hero-text">Explore Challenges</span>
+            </h2>
+            <AnimatedTabs tabs={tabsData} defaultTab="trending" />
+          </motion.section>
 
-        {/* Problems List */}
-        <div className="mt-8">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-craft-text-primary">Problems</h2>
-            <div className="flex items-center space-x-2 text-sm text-craft-text-secondary">
-              <span>Showing 1-20 of 2,847 problems</span>
-            </div>
-          </div>
-          
-          <div className="grid gap-4">
-            {problems.map((problem) => (
-              <ProblemCard key={problem.id} {...problem} />
-            ))}
-          </div>
-        </div>
+          {/* Topics to Explore */}
+          <motion.section
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <h2 className="text-3xl font-orbitron font-bold mb-8 text-center">
+              <span className="hero-text">Topics to Explore</span>
+            </h2>
+            <TopicGrid />
+          </motion.section>
 
-        {/* Load More */}
-        <div className="text-center mt-8">
-          <Link to="/problems">
-            <Button 
-              variant="outline" 
-              className="border-craft-border text-craft-text-secondary hover:border-craft-accent hover:text-craft-accent transition-all duration-200"
+          {/* Explore by Tags */}
+          <motion.section
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.5 }}
+          >
+            <h2 className="text-2xl font-orbitron font-bold mb-6">
+              <span className="hero-text">Explore by Tags</span>
+            </h2>
+            <TagExplorer />
+          </motion.section>
+
+          {/* Trending Challenges */}
+          <motion.section
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            <h2 className="text-3xl font-orbitron font-bold mb-8 text-center">
+              <span className="hero-text">Trending Challenges</span>
+            </h2>
+            <TrendingCarousel />
+          </motion.section>
+
+          {/* Weekly Pick */}
+          <motion.section
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.7 }}
+          >
+            <WeeklyPick />
+          </motion.section>
+
+          {/* Live Feed & Leaderboard */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <motion.section
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.8 }}
             >
-              Load More Problems
-            </Button>
-          </Link>
+              <h2 className="text-2xl font-orbitron font-bold mb-6">
+                <span className="hero-text">Live Solving</span>
+              </h2>
+              <LiveFeed />
+            </motion.section>
+
+            <motion.section
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.8 }}
+            >
+              <h2 className="text-2xl font-orbitron font-bold mb-6">
+                <span className="hero-text">Leaderboard</span>
+              </h2>
+              <Leaderboard />
+            </motion.section>
+          </div>
         </div>
-      </div>
-    </div>
+
+        {/* VS Code-like Code Preview Panel */}
+        <CodePreviewPanel
+          isOpen={isCodePanelOpen}
+          onClose={() => setIsCodePanelOpen(false)}
+        />
+      </motion.div>
+    </>
   );
 };
 

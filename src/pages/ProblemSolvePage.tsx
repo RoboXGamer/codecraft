@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useParams } from "react-router-dom";
 import Header from "@/components/Header";
@@ -9,6 +8,11 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Play, Send, Settings, ChevronLeft, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
+import {
+  ResizableHandle,
+  ResizablePanel,
+  ResizablePanelGroup,
+} from "@/components/ui/resizable";
 
 const ProblemSolvePage = () => {
   const { id } = useParams();
@@ -20,11 +24,10 @@ const ProblemSolvePage = () => {
     """
     # Your solution here
     pass`);
-  
+
   const [language, setLanguage] = useState("python");
   const [testResults, setTestResults] = useState(null);
   const [isRunning, setIsRunning] = useState(false);
-  const [leftPanelWidth, setLeftPanelWidth] = useState(35);
 
   // Mock problem data - in real app this would come from API
   const problem = {
@@ -40,36 +43,54 @@ You can return the answer in any order.`,
       {
         input: "nums = [2,7,11,15], target = 9",
         output: "[0,1]",
-        explanation: "Because nums[0] + nums[1] == 9, we return [0, 1]."
+        explanation: "Because nums[0] + nums[1] == 9, we return [0, 1].",
       },
       {
-        input: "nums = [3,2,4], target = 6", 
+        input: "nums = [3,2,4], target = 6",
         output: "[1,2]",
-        explanation: "Because nums[1] + nums[2] == 6, we return [1, 2]."
-      }
+        explanation: "Because nums[1] + nums[2] == 6, we return [1, 2].",
+      },
     ],
     constraints: [
       "2 <= nums.length <= 10^4",
       "-10^9 <= nums[i] <= 10^9",
       "-10^9 <= target <= 10^9",
-      "Only one valid answer exists."
-    ]
+      "Only one valid answer exists.",
+    ],
   };
 
   const handleRunCode = async () => {
     setIsRunning(true);
     toast("Running code...");
-    
+
     // Simulate API call
     setTimeout(() => {
       setTestResults({
         passed: 2,
         total: 3,
         cases: [
-          { input: "[2,7,11,15], 9", expected: "[0,1]", actual: "[0,1]", passed: true, time: "1ms" },
-          { input: "[3,2,4], 6", expected: "[1,2]", actual: "[1,2]", passed: true, time: "1ms" },
-          { input: "[3,3], 6", expected: "[0,1]", actual: "Time Limit Exceeded", passed: false, time: ">1000ms" }
-        ]
+          {
+            input: "[2,7,11,15], 9",
+            expected: "[0,1]",
+            actual: "[0,1]",
+            passed: true,
+            time: "1ms",
+          },
+          {
+            input: "[3,2,4], 6",
+            expected: "[1,2]",
+            actual: "[1,2]",
+            passed: true,
+            time: "1ms",
+          },
+          {
+            input: "[3,3], 6",
+            expected: "[0,1]",
+            actual: "Time Limit Exceeded",
+            passed: false,
+            time: ">1000ms",
+          },
+        ],
       });
       setIsRunning(false);
       toast("Code execution completed");
@@ -79,7 +100,7 @@ You can return the answer in any order.`,
   const handleSubmit = async () => {
     setIsRunning(true);
     toast("Submitting solution...");
-    
+
     // Simulate submission
     setTimeout(() => {
       toast.success("Solution accepted! +15 XP");
@@ -90,117 +111,109 @@ You can return the answer in any order.`,
   return (
     <div className="min-h-screen bg-craft-bg">
       <Header />
-      
       <div className="flex h-[calc(100vh-80px)]">
-        {/* Left Panel - Problem Description */}
-        <div 
-          className="bg-craft-panel border-r border-craft-border overflow-y-auto"
-          style={{ width: `${leftPanelWidth}%` }}
-        >
-          <div className="p-6">
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center space-x-2">
-                <h1 className="text-xl font-bold text-craft-text-primary">
-                  {problem.id}. {problem.title}
-                </h1>
-                <Badge className="bg-craft-success/20 text-craft-success border-craft-success/30">
-                  {problem.difficulty}
-                </Badge>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Button size="sm" variant="ghost" className="text-craft-text-secondary hover:text-craft-accent">
-                  <ChevronLeft className="w-4 h-4" />
-                </Button>
-                <Button size="sm" variant="ghost" className="text-craft-text-secondary hover:text-craft-accent">
-                  <ChevronRight className="w-4 h-4" />
-                </Button>
-              </div>
-            </div>
-            
-            <ProblemDescription problem={problem} />
-          </div>
-        </div>
+        <ResizablePanelGroup direction="horizontal">
+          {/* Left Panel - Problem Description */}
+          <ResizablePanel>
+            <div className="bg-craft-panel border-r border-craft-border overflow-y-auto [scrollbar-gutter:stable]">
+              <div className="p-6">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center space-x-2">
+                    <h1 className="text-xl font-bold text-craft-text-primary">
+                      {problem.id}. {problem.title}
+                    </h1>
+                    <Badge className="bg-craft-success/20 text-craft-success border-craft-success/30">
+                      {problem.difficulty}
+                    </Badge>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="text-craft-text-secondary hover:text-craft-accent"
+                    >
+                      <ChevronLeft className="w-4 h-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="text-craft-text-secondary hover:text-craft-accent"
+                    >
+                      <ChevronRight className="w-4 h-4" />
+                    </Button>
+                  </div>
+                </div>
 
-        {/* Resize Handle */}
-        <div 
-          className="w-1 bg-craft-border hover:bg-craft-accent cursor-col-resize transition-colors"
-          onMouseDown={(e) => {
-            const startX = e.clientX;
-            const startWidth = leftPanelWidth;
-            
-            const handleMouseMove = (e: MouseEvent) => {
-              const diff = e.clientX - startX;
-              const newWidth = startWidth + (diff / window.innerWidth) * 100;
-              setLeftPanelWidth(Math.max(20, Math.min(60, newWidth)));
-            };
-            
-            const handleMouseUp = () => {
-              document.removeEventListener('mousemove', handleMouseMove);
-              document.removeEventListener('mouseup', handleMouseUp);
-            };
-            
-            document.addEventListener('mousemove', handleMouseMove);
-            document.addEventListener('mouseup', handleMouseUp);
-          }}
-        />
-
-        {/* Right Panel - Code Editor */}
-        <div className="flex-1 flex flex-col">
-          {/* Editor Header */}
-          <div className="bg-craft-panel border-b border-craft-border p-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
-                <select 
-                  value={language}
-                  onChange={(e) => setLanguage(e.target.value)}
-                  className="bg-craft-bg border border-craft-border rounded px-3 py-1 text-craft-text-primary focus:border-craft-accent"
-                >
-                  <option value="python">Python</option>
-                  <option value="javascript">JavaScript</option>
-                  <option value="java">Java</option>
-                  <option value="cpp">C++</option>
-                </select>
-                <Button size="sm" variant="ghost" className="text-craft-text-secondary hover:text-craft-accent">
-                  <Settings className="w-4 h-4" />
-                </Button>
-              </div>
-              
-              <div className="flex items-center space-x-2">
-                <Button 
-                  onClick={handleRunCode}
-                  disabled={isRunning}
-                  variant="outline" 
-                  className="border-craft-border text-craft-text-secondary hover:border-craft-accent hover:text-craft-accent"
-                >
-                  <Play className="w-4 h-4 mr-2" />
-                  Run
-                </Button>
-                <Button 
-                  onClick={handleSubmit}
-                  disabled={isRunning}
-                  className="bg-craft-accent hover:bg-craft-accent/80 text-craft-bg"
-                >
-                  <Send className="w-4 h-4 mr-2" />
-                  Submit
-                </Button>
+                <ProblemDescription problem={problem} />
               </div>
             </div>
-          </div>
+          </ResizablePanel>
 
-          {/* Code Editor */}
-          <div className="flex-1">
-            <CodeEditor 
-              value={code}
-              onChange={setCode}
-              language={language}
-            />
-          </div>
+          {/* Resize Handle */}
+          <ResizableHandle />
 
-          {/* Test Results */}
-          {testResults && (
-            <TestResults results={testResults} />
-          )}
-        </div>
+          {/* Right Panel - Code Editor */}
+          <ResizablePanel>
+            <div className="flex flex-col h-full">
+              {/* Editor Header */}
+              <div className="bg-craft-panel border-b border-craft-border p-4">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <select
+                      value={language}
+                      onChange={(e) => setLanguage(e.target.value)}
+                      className="bg-craft-bg border border-craft-border rounded px-3 py-1 text-craft-text-primary focus:border-craft-accent"
+                    >
+                      <option value="python">Python</option>
+                      <option value="javascript">JavaScript</option>
+                      <option value="java">Java</option>
+                      <option value="cpp">C++</option>
+                    </select>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="text-craft-text-secondary hover:text-craft-accent"
+                    >
+                      <Settings className="w-4 h-4" />
+                    </Button>
+                  </div>
+
+                  <div className="flex items-center space-x-2">
+                    <Button
+                      onClick={handleRunCode}
+                      disabled={isRunning}
+                      variant="outline"
+                      className="border-craft-border text-black hover:border-craft-bg"
+                    >
+                      <Play className="w-4 h-4 mr-2" />
+                      Run
+                    </Button>
+                    <Button
+                      onClick={handleSubmit}
+                      disabled={isRunning}
+                      className="bg-craft-accent hover:bg-craft-accent/80 text-craft-bg"
+                    >
+                      <Send className="w-4 h-4 mr-2" />
+                      Submit
+                    </Button>
+                  </div>
+                </div>
+              </div>
+
+              {/* Code Editor */}
+              <div className="h-full">
+                <CodeEditor
+                  value={code}
+                  onChange={setCode}
+                  language={language}
+                />
+              </div>
+
+              {/* Test Results */}
+              {testResults && <TestResults results={testResults} />}
+            </div>
+          </ResizablePanel>
+        </ResizablePanelGroup>
       </div>
     </div>
   );
